@@ -1,0 +1,19 @@
+app/data_loader.py.
+📂 Purpose
+This module is responsible for:
+Downloading university policy PDFs from Google Drive (via file IDs).
+Extracting structured text and tables using pdfplumber.
+Returning them as LangChain Document objects for vector storage.
+
+Goal of vector_store.py
+This module handles:
+Embedding your policy documents
+Storing them in a vector database (in-memory or persistent)
+Providing retrieval capabilities for downstream agent/chat use
+
+qa_engine.py - Provides a QA interface using GROQ LLM and a vector store retriever. Exposes create_qa_chain().
+#MODEL_NAME = "mixtral-8x7b-32768"  # 
+#MODEL_NAME = "mistralai/Mixtral-8x7B-Instruct-v0.1"  # You can change this based on your GROQ model 
+
+
+

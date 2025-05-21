@@ -1,0 +1,39 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "asif.arif@gmail.com"
+          git config --global user.name "asifarif"
+
+      - name: Deploy to Hugging Face Spaces   
+        env:
+          SSUET_AGENT001: ${{ secrets.SSUET_AGENT001 }}
+        run: |
+          git remote add space https://huggingface.co/spaces/muasif/SSUET-Agent01
+          git push --force https://muasif:${SSUET_AGENT001}@huggingface.co/spaces/muasif/SSUET-Agent01 main
+

@@ -1,0 +1,36 @@
+# Core Python Dependencies
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+
+# AI & LLM Integration
+openai==1.24.1
+langchain==0.1.20
+tiktoken==0.6.0
+
+# Vector Store (FAISS)
+faiss-cpu==1.8.0
+sentence-transformers==2.7.0
+
+# Document Processing
+pdfplumber==0.10.3
+pypdf==4.2.0
+
+# Requests for downloading from GDrive
+requests==2.31.0
+charset_normalizer==3.3.2
+chardet==5.2.0
+certifi==2025.4.26
+
+# Logging & Environment Config
+python-dotenv==1.0.1
+
+# Embedding model dependency
+huggingface-hub==0.23.1
+#streamlit==1.45.0
+
+# Optional utilities
+pandas==2.2.2
+tqdm==4.66.2  # Helpful for progress bars
+
+
+
