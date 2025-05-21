@@ -1,64 +1,54 @@
-# Ignore Python cache files
+# Python artifacts
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
 
-# Ignore local environment files
-.env
-*.env
+# Virtual environments
+venv/
+.env/
+env/
+virtualenv/
 
-# Ignore version control
+# Git files
 .git/
 .gitignore
 
-# Ignore Docker-related files (if not needed in the image)
-Dockerfile*
-!.dockerignore  # Keep .dockerignore itself
-!Dockerfile     # Include Dockerfile
-
-# Ignore virtual environments
-venv/
-.env/
-virtualenv/
-env/
-
-# Ignore test and related files
-test/
-vectorstore_index/
-index.fails
-index.pkl
-
-# Ignore development and deployment artifacts
-modules_details.txt
-modules_links.json
-render.yaml
-run_tests.py
-
-# Ignore temporary files and OS-specific files
+# Logs and temp
 *.log
-*.pid
-*.seed
-*.gz
-*.zip
 *.tmp
 *.bak
 *.swp
+*.pid
+*.seed
 .DS_Store
 Thumbs.db
 
-# Ignore build and cache directories
-build/
-dist/
+# Cache and build artifacts
 *.egg-info/
 .cache/
+build/
+dist/
 .pytest_cache/
 .huggingface_cache/
 transformers_cache/
 
-# Include only necessary directories and files
-!app/
-!public/
-!app.py
+# Test files and local dev data
+test/
+run_tests.py
+
+# Deployment configs not needed in container
+render.yaml
+modules_details.txt
+modules_links.json
+
+# Exclude existing FAISS index — will be built during image build
+vectorstore_index/
+
+# Include only what's needed
 !requirements.txt
 !README.md
+!app.py
+!app/
+!public/
+!policy_links.json

@@ -1,16 +1,21 @@
+# Base image
 FROM python:3.10-slim
 
+# Set working directory
 WORKDIR /app
 
-# Copy requirements and install dependencies
+# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the entire project
+# Copy app code
 COPY . .
 
-# Expose the port FastAPI runs on
+# Build vector index during image build
+RUN python app/build_index.py --force
+
+# Expose FastAPI default port
 EXPOSE 7860
 
-# Run the FastAPI app
-CMD ["python", "app.py"]
+# Start FastAPI app
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7860"]
