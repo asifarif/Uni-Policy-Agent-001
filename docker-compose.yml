@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  uni-policy-agent:
+    image: uni-policy-agent
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./policy_links.json:/app/policy_links.json
+      - ./vectorstore_index:/app/vectorstore_index
+    env_file:
+      - .env
+    restart: unless-stopped

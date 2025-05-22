@@ -1,18 +1,31 @@
-# Base image
-FROM python:3.10-slim
+# -------- Stage 1: Build dependencies --------
+FROM python:3.10-slim AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# System dependencies (if needed)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy app code
+COPY requirements.txt .
+
+# Install packages into a virtual location
+RUN pip install --prefix=/install --no-cache-dir -r requirements.txt
+
+# -------- Stage 2: Final runtime image --------
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copy installed packages
+COPY --from=builder /install /usr/local
+
+# Copy app source
 COPY . .
 
-# Expose FastAPI default port
+# Expose FastAPI/Gradio/etc. port
 EXPOSE 7860
 
-# Start FastAPI app
+# Default command to run app
 CMD ["python", "start_with_index.py"]

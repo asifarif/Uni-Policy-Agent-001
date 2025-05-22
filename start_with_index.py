@@ -3,6 +3,11 @@ import os
 import subprocess
 import uvicorn
 
+# 🔐 Check API key
+api_key = os.getenv("GROQ_API_KEY")
+if not api_key:
+    raise ValueError("GROQ_API_KEY not set.")
+
 # Check if index exists, otherwise build
 if not os.path.exists("vectorstore_index") or not os.listdir("vectorstore_index"):
     print("Building vector index...")

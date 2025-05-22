@@ -37,7 +37,7 @@ vectorstore_index/
 *.faiss
 *.npz
 
-# Test files and local dev data
+# Tests and local dev files
 test/
 run_tests.py
 
@@ -46,13 +46,10 @@ render.yaml
 modules_details.txt
 modules_links.json
 
-# Exclude existing FAISS index — will be built during image build
-vectorstore_index/
-
 # Include only what's needed
 !requirements.txt
 !README.md
-!app.py
+!start_with_index.py
 !app/
 !public/
 !policy_links.json
