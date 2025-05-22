@@ -3,9 +3,8 @@ FROM python:3.10-slim AS builder
 
 WORKDIR /app
 
-# System dependencies (if needed)
-RUN apt-get update && apt-get install -y \
-    build-essential \
+# System dependencies
+RUN apt-get update && apt-get install -y build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
@@ -16,16 +15,24 @@ RUN pip install --prefix=/install --no-cache-dir -r requirements.txt
 # -------- Stage 2: Final runtime image --------
 FROM python:3.10-slim
 
-WORKDIR /app
+# Create non-root user (required by Hugging Face)
+RUN useradd -m -u 1000 user
+USER user
+
+WORKDIR /home/user/app
 
 # Copy installed packages
 COPY --from=builder /install /usr/local
 
-# Copy app source
-COPY . .
+# Copy app source code
+COPY --chown=user . .
 
-# Expose FastAPI/Gradio/etc. port
-EXPOSE 7860
+# Set default environment variables
+ENV PORT=7860
+ARG START_COMMAND="python start_with_index.py"
+ENV CMD_EXEC=$START_COMMAND
 
-# Default command to run app
-CMD ["python", "start_with_index.py"]
+EXPOSE $PORT
+
+# Entrypoint to run based on the passed command (can be uvicorn or python script)
+ENTRYPOINT ["/bin/sh", "-c", "$CMD_EXEC"]

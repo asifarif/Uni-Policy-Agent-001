@@ -2,6 +2,7 @@
 
 import os
 import logging
+import requests
 from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
@@ -13,6 +14,28 @@ load_dotenv()
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# === NEW: Automatically download remote FAISS index and policy file if missing ===
+VECTOR_DIR = "vectorstore_index"
+VECTOR_URL = "https://huggingface.co/datasets/muasif/SSUET-POLICY-VECTOR/resolve/main/index.faiss"
+POLICY_URL = "https://huggingface.co/datasets/muasif/SSUET-POLICY-VECTOR/resolve/main/policy_links.json"
+
+def download_file_if_missing(url, filepath):
+    if not os.path.exists(filepath):
+        print(f"⬇️ Downloading {filepath} from {url} ...")
+        r = requests.get(url)
+        r.raise_for_status()
+        with open(filepath, "wb") as f:
+            f.write(r.content)
+        print(f"✅ Saved {filepath}")
+
+def prepare_files():
+    os.makedirs(VECTOR_DIR, exist_ok=True)
+    download_file_if_missing(POLICY_URL, "policy_links.json")
+    download_file_if_missing(VECTOR_URL, os.path.join(VECTOR_DIR, "index.faiss"))
+
+prepare_files()
+# === End of remote file fetch ===
 
 # Constants
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
