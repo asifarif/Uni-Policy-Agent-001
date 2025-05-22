@@ -32,6 +32,10 @@ dist/
 .pytest_cache/
 .huggingface_cache/
 transformers_cache/
+vectorstore_index/
+*.pkl
+*.faiss
+*.npz
 
 # Test files and local dev data
 test/
