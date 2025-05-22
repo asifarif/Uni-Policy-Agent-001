@@ -29,10 +29,9 @@ COPY --chown=user . .
 
 # Set default environment variables
 ENV PORT=7860
-ARG START_COMMAND="python start_with_index.py"
-ENV CMD_EXEC=$START_COMMAND
+ENV CMD_EXEC="python start_with_index.py"
 
 EXPOSE $PORT
 
-# Entrypoint to run based on the passed command (can be uvicorn or python script)
-ENTRYPOINT ["/bin/sh", "-c", "$CMD_EXEC"]
+# Run the command based on CMD_EXEC
+CMD bash -c "$CMD_EXEC"
