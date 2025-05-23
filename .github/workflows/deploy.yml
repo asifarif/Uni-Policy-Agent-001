@@ -39,9 +39,28 @@ jobs:
           git config --global user.email "asif.arif@gmail.com"
           git config --global user.name "asifarif"
 
-      - name: 🚀 Push to Hugging Face Spaces
+      - name: 🚀 Push app code to Hugging Face Spaces
         env:
           SSUET_AGENT001: ${{ secrets.SSUET_AGENT001 }}
+
         run: |
-          git remote add space https://huggingface.co/spaces/muasif/SSUET-Agent-002 || true
-          git push --force https://muasif:${SSUET_AGENT001}@huggingface.co/spaces/muasif/SSUET-Agent-002 main
+          mkdir hf-deploy
+          cp Dockerfile requirements.txt start_with_index.py -r app hf-deploy/
+
+          cd hf-deploy
+          git init
+          git config user.email "asif.arif@gmail.com"
+          git config user.name "asif.arif"
+          git remote add origin https://muasif:${HF_TOKEN}@huggingface.co/spaces/muasif/SSUET-AGENT-003
+          git add .
+          git commit -m "Deploy app to Hugging Face Space"
+          git push --force origin main
+    
+
+
+#      - name: 🚀 Push to Hugging Face Spaces
+#        env:
+#          SSUET_AGENT001: ${{ secrets.SSUET_AGENT001 }}
+#        run: |
+#          git remote add space https://huggingface.co/spaces/muasif/SSUET-AGENT-003 || true
+#          git push --force https://muasif:${SSUET_AGENT001}@huggingface.co/spaces/muasif/SSUET-AGENT-003 main
