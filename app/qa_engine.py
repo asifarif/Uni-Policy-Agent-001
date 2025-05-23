@@ -25,7 +25,7 @@ class GroqLLM(LLM):
 
     model: str = MODEL_NAME
     temperature: float = 0.2
-    max_tokens: int = 1024
+    max_tokens: int = 1024 # need to check the impact of max_tokens
     api_key: Optional[str] = GROQ_API_KEY
 
     @property
