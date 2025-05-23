@@ -47,6 +47,19 @@ jobs:
           mkdir hf-deploy
           cp Dockerfile requirements.txt start_with_index.py -r app hf-deploy/
 
+          echo '---' > hf-deploy/README.md
+          echo 'title: SSUET AGENT 003' >> hf-deploy/README.md
+          echo 'emoji: 🤖' >> hf-deploy/README.md
+          echo 'colorFrom: indigo' >> hf-deploy/README.md
+          echo 'colorTo: blue' >> hf-deploy/README.md
+          echo 'sdk: docker' >> hf-deploy/README.md
+          echo 'pinned: false' >> hf-deploy/README.md
+          echo '---' >> hf-deploy/README.md
+
+
+          mkdir hf-deploy
+          cp Dockerfile requirements.txt start_with_index.py -r app hf-deploy/
+
           cd hf-deploy
           git init
           git config user.email "asif.arif@gmail.com"
