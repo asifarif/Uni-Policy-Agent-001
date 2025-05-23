@@ -51,6 +51,7 @@ jobs:
           git init
           git config user.email "asif.arif@gmail.com"
           git config user.name "asif.arif"
+          git branch -m main
           git remote add origin https://muasif:${SSUET_AGENT001}@huggingface.co/spaces/muasif/SSUET-AGENT-003
           git add .
           git commit -m "Deploy app to Hugging Face Space"
