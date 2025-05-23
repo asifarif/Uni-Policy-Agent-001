@@ -45,7 +45,7 @@ jobs:
 
         run: |
           mkdir hf-deploy
-          cp Dockerfile requirements.txt start_with_index.py build_index.py -r app hf-deploy/
+          cp Dockerfile requirements.txt start_with_index.py build_index.py -r app public hf-deploy/
 
 
           echo '---' > hf-deploy/README.md
