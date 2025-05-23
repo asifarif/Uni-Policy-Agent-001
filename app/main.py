@@ -1,6 +1,7 @@
 # app/main.py
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse
 from app.qa_engine import create_qa_chain
 from app.vector_store import load_vectorstore, build_vectorstore_if_needed
 from fastapi.staticfiles import StaticFiles
@@ -42,5 +43,19 @@ async def query_api(request: Request):
 # Mount static files if available
 if os.path.isdir("public"):
     app.mount("/", StaticFiles(directory="public", html=True), name="static")
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return """
+    <html>
+        <head>
+            <title>SSUET Agent 003</title>
+        </head>
+        <body>
+            <h2>🤖 SSUET AI Chatbot is running!</h2>
+            <p>Use the <code>/query</code> endpoint to interact with the QA system.</p>
+        </body>
+    </html>
+    """
 
 # uvicorn app.main:app --reload --port 8010
