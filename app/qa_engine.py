@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 # MODEL_NAME = "llama3-70b-8192"
 # MODEL_NAME = "mixtral-8x7b-32768"
- MODEL_NAME = "deepseek-r1-distill-llama-70b"
+MODEL_NAME = "deepseek-r1-distill-llama-70b"
 
 class GroqLLM(LLM):
     """Custom LangChain-compatible wrapper for Groq API."""
