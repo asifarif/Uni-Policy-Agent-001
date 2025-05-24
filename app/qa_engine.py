@@ -17,15 +17,16 @@ from langchain.chains import RetrievalQAWithSourcesChain
 logger = logging.getLogger(__name__)
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+MODEL_NAME = "DeepSeek-R1-Distill-Qwen-32B"
 # MODEL_NAME = "mixtral-8x7b-32768"
-MODEL_NAME = "deepseek-r1-distill-llama-70b"
+# MODEL_NAME = "deepseek-r1-distill-llama-70b"
 
 class GroqLLM(LLM):
     """Custom LangChain-compatible wrapper for Groq API."""
 
     model: str = MODEL_NAME
-    temperature: float = 0.2
-    max_tokens: int = 1024 # need to check the impact of max_tokens
+    temperature: float = 0.25
+    max_tokens: int =  512 # need to check the impact of max_tokens
     api_key: Optional[str] = GROQ_API_KEY
 
     @property

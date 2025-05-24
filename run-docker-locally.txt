@@ -1,0 +1,110 @@
+Running your Dockerized app locally is easy once you have Docker installed. Here’s a **step-by-step guide** to **download, build, and run** your app locally using your `Dockerfile`.
+
+---
+
+## ✅ Prerequisites
+
+* Install Docker: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+* Your project should include:
+
+  * `Dockerfile`
+  * `requirements.txt`
+  * Your app code (e.g., `app/`, `public/`, etc.)
+
+---
+
+## 📦 Step 1: Clone or Navigate to Your Project
+
+```bash
+git clone https://github.com/yourusername/your-repo-name.git
+cd your-repo-name
+```
+
+Or, just navigate to the folder where your `Dockerfile` is:
+
+```bash
+cd path/to/your/project
+```
+
+---
+
+## 🛠️ Step 2: Build the Docker Image
+
+```bash
+docker build -t ssuet-agent .
+```
+
+* `ssuet-agent`: This is the **image name** you assign.
+* `.`: Refers to the **current directory** (must contain your `Dockerfile`).
+
+---
+
+## 🏃 Step 3: Run the Docker Container
+
+```bash
+docker run -it -p 7860:7860 ssuet-agent
+```
+
+* `-p 7860:7860`: Maps **port 7860 inside the container** to your **local machine’s port 7860**.
+* `-it`: Runs interactively and connects to terminal output.
+* `ssuet-agent`: Your image name.
+
+Now visit your app at:
+
+```
+http://localhost:7860
+```
+
+✅ If your app uses Uvicorn and serves FastAPI with `uvicorn app.main:app --host 0.0.0.0 --port 7860`, it should now be live.
+
+---
+
+## 🧪 Optional: Run with Logs in Background
+
+```bash
+docker run -d -p 7860:7860 --name my-agent ssuet-agent
+```
+
+* `-d`: Runs container in **detached** mode (in background).
+* `--name my-agent`: Names the container so you can refer to it easily.
+
+To see logs:
+
+```bash
+docker logs -f my-agent
+```
+
+---
+
+## 🧹 Cleanup Commands
+
+* Stop container:
+
+  ```bash
+  docker stop my-agent
+  ```
+
+* Remove container:
+
+  ```bash
+  docker rm my-agent
+  ```
+
+* Remove image:
+
+  ```bash
+  docker rmi ssuet-agent
+  ```
+
+---
+
+## 🧑‍💻 If You Make Code Changes
+
+Rebuild the image to apply them:
+
+```bash
+docker build -t ssuet-agent .
+docker run -p 7860:7860 ssuet-agent
+```
+
+---
